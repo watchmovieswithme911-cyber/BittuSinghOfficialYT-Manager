@@ -59,7 +59,8 @@ export const ModelName = {
   Genre: 'Genre',
   ContentScript: 'ContentScript',
   UploadQueue: 'UploadQueue',
-  ChatMessage: 'ChatMessage'
+  ChatMessage: 'ChatMessage',
+  AutomationTask: 'AutomationTask'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -220,6 +221,29 @@ export const ChatMessageScalarFieldEnum = {
 } as const
 
 export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[keyof typeof ChatMessageScalarFieldEnum]
+
+
+export const AutomationTaskScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  genre: 'genre',
+  language: 'language',
+  status: 'status',
+  priority: 'priority',
+  result: 'result',
+  error: 'error',
+  runsCount: 'runsCount',
+  lastRunAt: 'lastRunAt',
+  nextRunAt: 'nextRunAt',
+  isRecurring: 'isRecurring',
+  intervalMins: 'intervalMins',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AutomationTaskScalarFieldEnum = (typeof AutomationTaskScalarFieldEnum)[keyof typeof AutomationTaskScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -36,6 +36,9 @@ import type {
   ChatMessageType,
   ChatMessageCreateInput,
   ChatMessageUpdateInput,
+  AutomationTaskType,
+  AutomationTaskCreateInput,
+  AutomationTaskUpdateInput,
 } from './types'
 
 /** Get the API base URL */
@@ -861,6 +864,97 @@ export async function deleteChatMessage(args: { data: { id: string; userId?: str
   if (!response.ok) {
     const err = await response.json().catch(() => ({ error: { message: response.statusText } }))
     throw new Error(err.error?.message || 'Failed to delete ChatMessage')
+  }
+  return { success: true }
+}
+
+// ============================================================================
+// AutomationTask Client Functions
+// ============================================================================
+
+/**
+ * List all AutomationTask records
+ */
+export async function getAutomationTaskList(args: { data: { userId?: string; where?: Record<string, unknown> } }): Promise<AutomationTaskType[]> {
+  const params = new URLSearchParams()
+  if (args.data.userId) params.set('userId', args.data.userId)
+  if (args.data.where) {
+    for (const [key, value] of Object.entries(args.data.where)) {
+      if (value !== undefined && value !== null) params.set(key, String(value))
+    }
+  }
+  const qs = params.toString()
+  const url = `${getApiBase()}/api/automation-tasks${qs ? `?${qs}` : ''}`
+  const response = await fetch(url)
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: { message: response.statusText } }))
+    throw new Error(err.error?.message || 'Failed to list AutomationTask')
+  }
+  const json = await response.json()
+  return (json.items || []) as AutomationTaskType[]
+}
+
+/**
+ * Get a single AutomationTask by ID
+ */
+export async function getAutomationTaskById(args: { data: { id: string; userId?: string } }): Promise<AutomationTaskType> {
+  const url = `${getApiBase()}/api/automation-tasks/${args.data.id}`
+  const response = await fetch(url)
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: { message: response.statusText } }))
+    throw new Error(err.error?.message || 'AutomationTask not found')
+  }
+  const json = await response.json()
+  return json.data as AutomationTaskType
+}
+
+/**
+ * Create a new AutomationTask
+ */
+export async function createAutomationTask(args: { data: { input: AutomationTaskCreateInput; userId?: string } }): Promise<AutomationTaskType> {
+  const url = `${getApiBase()}/api/automation-tasks`
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(args.data.input),
+  })
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: { message: response.statusText } }))
+    throw new Error(err.error?.message || 'Failed to create AutomationTask')
+  }
+  const json = await response.json()
+  return json.data as AutomationTaskType
+}
+
+/**
+ * Update an existing AutomationTask
+ */
+export async function updateAutomationTask(args: { data: { id: string; input: AutomationTaskUpdateInput; userId?: string } }): Promise<AutomationTaskType> {
+  const url = `${getApiBase()}/api/automation-tasks/${args.data.id}`
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(args.data.input),
+  })
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: { message: response.statusText } }))
+    throw new Error(err.error?.message || 'Failed to update AutomationTask')
+  }
+  const json = await response.json()
+  return json.data as AutomationTaskType
+}
+
+/**
+ * Delete a AutomationTask
+ */
+export async function deleteAutomationTask(args: { data: { id: string; userId?: string } }): Promise<{ success: boolean }> {
+  const url = `${getApiBase()}/api/automation-tasks/${args.data.id}`
+  const response = await fetch(url, {
+    method: 'DELETE',
+  })
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: { message: response.statusText } }))
+    throw new Error(err.error?.message || 'Failed to delete AutomationTask')
   }
   return { success: true }
 }

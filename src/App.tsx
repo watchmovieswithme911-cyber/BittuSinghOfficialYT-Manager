@@ -9,6 +9,7 @@ import ScriptGenerator from '@/components/ScriptGenerator'
 import SEOOptimizer from '@/components/SEOOptimizer'
 import AutoUploadQueue from '@/components/AutoUploadQueue'
 import AIChatbot from '@/components/AIChatbot'
+import AutoPilot from '@/components/AutoPilot'
 import {
   Lightbulb,
   Calendar,
@@ -20,6 +21,7 @@ import {
   Search,
   Upload,
   Bot,
+  Zap,
 } from 'lucide-react'
 
 export default function App() {
@@ -71,7 +73,11 @@ export default function App() {
           </TabsList>
 
           {/* Second row of tabs */}
-          <TabsList className="grid grid-cols-4 w-full mb-6">
+          <TabsList className="grid grid-cols-5 w-full mb-6">
+            <TabsTrigger value="autopilot" className="flex items-center gap-1 text-xs bg-violet-600 text-white data-[state=active]:bg-violet-700">
+              <Zap className="h-3 w-3" />
+              <span className="hidden sm:inline">AutoPilot</span>
+            </TabsTrigger>
             <TabsTrigger value="ideas" className="flex items-center gap-1 text-xs">
               <Lightbulb className="h-3 w-3" />
               <span className="hidden sm:inline">Ideas</span>
@@ -95,6 +101,7 @@ export default function App() {
           <TabsContent value="seo"><SEOOptimizer /></TabsContent>
           <TabsContent value="upload"><AutoUploadQueue /></TabsContent>
           <TabsContent value="chatbot"><AIChatbot /></TabsContent>
+          <TabsContent value="autopilot"><AutoPilot /></TabsContent>
           <TabsContent value="ideas"><VideoIdeas /></TabsContent>
           <TabsContent value="calendar"><ContentCalendar /></TabsContent>
           <TabsContent value="analytics"><AnalyticsDashboard /></TabsContent>

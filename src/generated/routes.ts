@@ -19,6 +19,7 @@ import { createGenreRoutes, setPrisma as setPrismaGenre, setGenreHooks } from ".
 import { createContentScriptRoutes, setPrisma as setPrismaContentScript, setContentScriptHooks } from "./content-script.routes"
 import { createUploadQueueRoutes, setPrisma as setPrismaUploadQueue, setUploadQueueHooks } from "./upload-queue.routes"
 import { createChatMessageRoutes, setPrisma as setPrismaChatMessage, setChatMessageHooks } from "./chat-message.routes"
+import { createAutomationTaskRoutes, setPrisma as setPrismaAutomationTask, setAutomationTaskHooks } from "./automation-task.routes"
 
 // Hook imports
 import { userHooks } from "./user.hooks"
@@ -30,6 +31,7 @@ import { genreHooks } from "./genre.hooks"
 import { contentScriptHooks } from "./content-script.hooks"
 import { uploadQueueHooks } from "./upload-queue.hooks"
 import { chatMessageHooks } from "./chat-message.hooks"
+import { automationTaskHooks } from "./automation-task.hooks"
 
 // Re-export route creators and setters
 export {
@@ -59,7 +61,10 @@ export {
   setUploadQueueHooks,
   createChatMessageRoutes,
   setPrismaChatMessage,
-  setChatMessageHooks
+  setChatMessageHooks,
+  createAutomationTaskRoutes,
+  setPrismaAutomationTask,
+  setAutomationTaskHooks
 }
 
 // Re-export hooks (model-specific)
@@ -72,7 +77,8 @@ export {
   genreHooks,
   contentScriptHooks,
   uploadQueueHooks,
-  chatMessageHooks
+  chatMessageHooks,
+  automationTaskHooks
 }
 
 // Re-export hook types
@@ -85,6 +91,7 @@ export type { GenreHooks } from "./genre.hooks"
 export type { ContentScriptHooks } from "./content-script.hooks"
 export type { UploadQueueHooks } from "./upload-queue.hooks"
 export type { ChatMessageHooks } from "./chat-message.hooks"
+export type { AutomationTaskHooks } from "./automation-task.hooks"
 
 /**
  * Create all routes and mount them on a single Hono app
@@ -102,6 +109,7 @@ export function createAllRoutes(prisma: PrismaClient): Hono {
   setPrismaContentScript(prisma)
   setPrismaUploadQueue(prisma)
   setPrismaChatMessage(prisma)
+  setPrismaAutomationTask(prisma)
 
   // Set hooks for all routes
   setUserHooks(userHooks)
@@ -113,6 +121,7 @@ export function createAllRoutes(prisma: PrismaClient): Hono {
   setContentScriptHooks(contentScriptHooks)
   setUploadQueueHooks(uploadQueueHooks)
   setChatMessageHooks(chatMessageHooks)
+  setAutomationTaskHooks(automationTaskHooks)
 
   // Mount routes
   app.route("/users", createUserRoutes())
@@ -124,6 +133,7 @@ export function createAllRoutes(prisma: PrismaClient): Hono {
   app.route("/content-scripts", createContentScriptRoutes())
   app.route("/upload-queues", createUploadQueueRoutes())
   app.route("/chat-messages", createChatMessageRoutes())
+  app.route("/automation-tasks", createAutomationTaskRoutes())
 
   return app
 }

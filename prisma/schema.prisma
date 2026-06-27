@@ -147,3 +147,25 @@ model ChatMessage {
 
   @@map("chat_messages")
 }
+
+model AutomationTask {
+  id           String   @id @default(cuid())
+  type         String   // generate_script, generate_idea, seo_optimize, schedule_upload, analytics_report, trend_scan
+  title        String
+  description  String?
+  genre        String?
+  language     String?
+  status       String   @default("queued") // queued, running, completed, failed
+  priority     Int      @default(3) // 1=low, 5=critical
+  result       String?  // JSON result data
+  error        String?  // error message if failed
+  runsCount    Int      @default(0)
+  lastRunAt    DateTime?
+  nextRunAt    DateTime?
+  isRecurring  Boolean  @default(false)
+  intervalMins Int?     // repeat interval in minutes
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("automation_tasks")
+}

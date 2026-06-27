@@ -392,7 +392,8 @@ export const ModelName = {
   Genre: 'Genre',
   ContentScript: 'ContentScript',
   UploadQueue: 'UploadQueue',
-  ChatMessage: 'ChatMessage'
+  ChatMessage: 'ChatMessage',
+  AutomationTask: 'AutomationTask'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "video" | "videoIdea" | "comment" | "analyticsSnapshot" | "genre" | "contentScript" | "uploadQueue" | "chatMessage"
+    modelProps: "user" | "video" | "videoIdea" | "comment" | "analyticsSnapshot" | "genre" | "contentScript" | "uploadQueue" | "chatMessage" | "automationTask"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1079,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AutomationTask: {
+      payload: Prisma.$AutomationTaskPayload<ExtArgs>
+      fields: Prisma.AutomationTaskFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AutomationTaskFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AutomationTaskFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>
+        }
+        findFirst: {
+          args: Prisma.AutomationTaskFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AutomationTaskFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>
+        }
+        findMany: {
+          args: Prisma.AutomationTaskFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>[]
+        }
+        create: {
+          args: Prisma.AutomationTaskCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>
+        }
+        createMany: {
+          args: Prisma.AutomationTaskCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AutomationTaskCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>[]
+        }
+        delete: {
+          args: Prisma.AutomationTaskDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>
+        }
+        update: {
+          args: Prisma.AutomationTaskUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>
+        }
+        deleteMany: {
+          args: Prisma.AutomationTaskDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AutomationTaskUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AutomationTaskUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>[]
+        }
+        upsert: {
+          args: Prisma.AutomationTaskUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationTaskPayload>
+        }
+        aggregate: {
+          args: Prisma.AutomationTaskAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAutomationTask>
+        }
+        groupBy: {
+          args: Prisma.AutomationTaskGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutomationTaskGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AutomationTaskCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutomationTaskCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1261,6 +1336,29 @@ export const ChatMessageScalarFieldEnum = {
 export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[keyof typeof ChatMessageScalarFieldEnum]
 
 
+export const AutomationTaskScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  genre: 'genre',
+  language: 'language',
+  status: 'status',
+  priority: 'priority',
+  result: 'result',
+  error: 'error',
+  runsCount: 'runsCount',
+  lastRunAt: 'lastRunAt',
+  nextRunAt: 'nextRunAt',
+  isRecurring: 'isRecurring',
+  intervalMins: 'intervalMins',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AutomationTaskScalarFieldEnum = (typeof AutomationTaskScalarFieldEnum)[keyof typeof AutomationTaskScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1421,6 +1519,7 @@ export type GlobalOmitConfig = {
   contentScript?: Prisma.ContentScriptOmit
   uploadQueue?: Prisma.UploadQueueOmit
   chatMessage?: Prisma.ChatMessageOmit
+  automationTask?: Prisma.AutomationTaskOmit
 }
 
 /* Types for Logging */

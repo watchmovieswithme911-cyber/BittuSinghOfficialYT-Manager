@@ -131,6 +131,26 @@ export interface ChatMessageType {
   createdAt: Date
 }
 
+export interface AutomationTaskType {
+  id: string
+  type: string
+  title: string
+  description?: string
+  genre?: string
+  language?: string
+  status: string
+  priority: number
+  result?: string
+  error?: string
+  runsCount: number
+  lastRunAt?: Date
+  nextRunAt?: Date
+  isRecurring: boolean
+  intervalMins?: number
+  createdAt: Date
+  updatedAt: Date
+}
+
 // ============================================================================
 // Input Types
 // ============================================================================
@@ -325,6 +345,40 @@ export interface ChatMessageUpdateInput {
   category?: string
 }
 
+export interface AutomationTaskCreateInput {
+  type: string
+  title: string
+  description?: string
+  genre?: string
+  language?: string
+  status?: string
+  priority?: number
+  result?: string
+  error?: string
+  runsCount?: number
+  lastRunAt?: Date
+  nextRunAt?: Date
+  isRecurring?: boolean
+  intervalMins?: number
+}
+
+export interface AutomationTaskUpdateInput {
+  type?: string
+  title?: string
+  description?: string
+  genre?: string
+  language?: string
+  status?: string
+  priority?: number
+  result?: string
+  error?: string
+  runsCount?: number
+  lastRunAt?: Date
+  nextRunAt?: Date
+  isRecurring?: boolean
+  intervalMins?: number
+}
+
 // ============================================================================
 // Hook Types
 // ============================================================================
@@ -371,4 +425,5 @@ export interface ServerFunctionHooks {
   ContentScript?: ModelHooks<ContentScriptCreateInput, ContentScriptUpdateInput, ContentScriptType>
   UploadQueue?: ModelHooks<UploadQueueCreateInput, UploadQueueUpdateInput, UploadQueueType>
   ChatMessage?: ModelHooks<ChatMessageCreateInput, ChatMessageUpdateInput, ChatMessageType>
+  AutomationTask?: ModelHooks<AutomationTaskCreateInput, AutomationTaskUpdateInput, AutomationTaskType>
 }

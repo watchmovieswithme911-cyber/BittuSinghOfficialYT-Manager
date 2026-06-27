@@ -62,3 +62,8 @@ export type UploadQueue = Prisma.UploadQueueModel
  * 
  */
 export type ChatMessage = Prisma.ChatMessageModel
+/**
+ * Model AutomationTask
+ * 
+ */
+export type AutomationTask = Prisma.AutomationTaskModel
