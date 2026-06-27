@@ -1,0 +1,149 @@
+// SHOGO:CUSTOM-START prisma-header
+// Managed by Shogo. Do not add a datasource `url` or change the generator `provider` — the database URL is configured in prisma.config.ts (Prisma 7+).
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+// SHOGO:CUSTOM-END
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Video {
+  id            String   @id @default(cuid())
+  title         String
+  description   String?
+  status        String   @default("idea") // idea, scripting, filming, editing, scheduled, published
+  tags          String?
+  scheduledDate DateTime?
+  publishedDate DateTime?
+  youtubeUrl    String?
+  thumbnailUrl  String?
+  views         Int      @default(0)
+  likes         Int      @default(0)
+  notes         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("videos")
+}
+
+model VideoIdea {
+  id              String   @id @default(cuid())
+  title           String
+  description     String?
+  category        String?
+  priority        Int      @default(3) // 1=low, 5=high
+  estimatedEffort String   @default("medium") // short, medium, long
+  status          String   @default("new") // new, approved, rejected
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("video_ideas")
+}
+
+model Comment {
+  id           String   @id @default(cuid())
+  videoTitle   String
+  author       String
+  content      String
+  sentiment    String   @default("neutral") // positive, neutral, negative
+  status       String   @default("new") // new, responded, archived
+  publishedAt  DateTime?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("comments")
+}
+
+model AnalyticsSnapshot {
+  id                  String   @id @default(cuid())
+  date                DateTime @unique
+  subscribers         Int      @default(0)
+  totalViews          Int      @default(0)
+  watchTimeHours      Float    @default(0)
+  avgViewDurationMins Float    @default(0)
+  topVideo            String?
+  notes               String?
+  createdAt           DateTime @default(now()) @map("created_at")
+
+  @@map("analytics_snapshots")
+}
+
+model Genre {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  language    String   @default("Hindi")
+  description String?
+  bpmRange    String?
+  mood        String?
+  tags        String?
+  iconEmoji   String   @default("🎵")
+  colorHex    String   @default("#e11d48")
+  videoCount  Int      @default(0)
+  avgViews    Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("genres")
+}
+
+model ContentScript {
+  id          String   @id @default(cuid())
+  videoTitle  String
+  videoType   String   @default("lyrics") // lyrics, script, description, seo, intro, outro
+  genre       String?
+  language    String   @default("Hindi")
+  content     String
+  tags        String?
+  duration    String?
+  mood        String?
+  status      String   @default("draft") // draft, ready, published
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("content_scripts")
+}
+
+model UploadQueue {
+  id            String   @id @default(cuid())
+  videoTitle    String
+  genre         String?
+  language      String?
+  videoType     String?
+  status        String   @default("pending") // pending, processing, uploading, uploaded, failed
+  scheduledTime String?
+  platform      String   @default("YouTube")
+  thumbnailUrl  String?
+  youtubeUrl    String?
+  views         Int      @default(0)
+  likes         Int      @default(0)
+  notes         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("upload_queue")
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  role      String   // user, assistant
+  content   String
+  category  String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("chat_messages")
+}
